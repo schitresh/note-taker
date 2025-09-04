@@ -1,1 +1,10 @@
 fastapi[standard]
+pydantic_settings
+
+# Database
+motor
+beanie
+
+# Development
+debugpy
+ruff

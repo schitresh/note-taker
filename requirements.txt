@@ -11,6 +11,8 @@ anyio==4.10.0
     #   httpx
     #   starlette
     #   watchfiles
+beanie==2.0.0
+    # via -r requirements.in
 certifi==2025.8.3
     # via
     #   httpcore
@@ -18,11 +20,16 @@ certifi==2025.8.3
     #   sentry-sdk
 click==8.2.1
     # via
+    #   beanie
     #   rich-toolkit
     #   typer
     #   uvicorn
+debugpy==1.8.16
+    # via -r requirements.in
 dnspython==2.7.0
-    # via email-validator
+    # via
+    #   email-validator
+    #   pymongo
 email-validator==2.2.0
     # via
     #   fastapi
@@ -52,22 +59,37 @@ idna==3.10
     #   httpx
 jinja2==3.1.6
     # via fastapi
+lazy-model==0.3.0
+    # via beanie
 markdown-it-py==4.0.0
     # via rich
 markupsafe==3.0.2
     # via jinja2
 mdurl==0.1.2
     # via markdown-it-py
+motor==3.7.1
+    # via -r requirements.in
 pydantic[email]==2.11.7
     # via
+    #   beanie
     #   fastapi
     #   fastapi-cloud-cli
+    #   lazy-model
+    #   pydantic-settings
 pydantic-core==2.33.2
     # via pydantic
+pydantic-settings==2.10.1
+    # via -r requirements.in
 pygments==2.19.2
     # via rich
+pymongo==4.14.1
+    # via
+    #   beanie
+    #   motor
 python-dotenv==1.1.1
-    # via uvicorn
+    # via
+    #   pydantic-settings
+    #   uvicorn
 python-multipart==0.0.20
     # via fastapi
 pyyaml==6.0.2
@@ -82,6 +104,8 @@ rich-toolkit==0.15.0
     #   fastapi-cloud-cli
 rignore==0.6.4
     # via fastapi-cloud-cli
+ruff==0.12.11
+    # via -r requirements.in
 sentry-sdk==2.35.0
     # via fastapi-cloud-cli
 shellingham==1.5.4
@@ -96,6 +120,7 @@ typer==0.16.1
     #   fastapi-cloud-cli
 typing-extensions==4.14.1
     # via
+    #   beanie
     #   fastapi
     #   pydantic
     #   pydantic-core
@@ -103,7 +128,9 @@ typing-extensions==4.14.1
     #   typer
     #   typing-inspection
 typing-inspection==0.4.1
-    # via pydantic
+    # via
+    #   pydantic
+    #   pydantic-settings
 urllib3==2.5.0
     # via sentry-sdk
 uvicorn[standard]==0.35.0
