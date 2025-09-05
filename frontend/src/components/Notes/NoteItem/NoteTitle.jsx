@@ -19,8 +19,7 @@ const NoteTitle = styled(TextField)(() => ({
     fontSize: '2.5rem',
     fontWeight: 700,
     lineHeight: 1.2,
-    py: 1,
-    px: 0,
+    padding: 0,
     color: 'text.primary',
     '&::placeholder': {
       color: 'text.secondary',
@@ -29,7 +28,6 @@ const NoteTitle = styled(TextField)(() => ({
   },
   '& .MuiOutlinedInput-notchedOutline': {
     border: 'none',
-    p: 0,
   },
 }));
 

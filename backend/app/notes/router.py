@@ -21,7 +21,7 @@ async def read_note(note_id: PydanticObjectId):
     return note
 
 
-@router.post("/", response_model=NoteRead)
+@router.post("", response_model=NoteRead)
 async def create_note(note_data: NoteCreate):
     note = Note(**note_data.model_dump())
     await note.insert()

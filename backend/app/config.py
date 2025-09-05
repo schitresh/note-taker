@@ -1,4 +1,5 @@
 import os
+import typing as t
 
 from pydantic_settings import BaseSettings
 
@@ -12,7 +13,7 @@ class Settings(BaseSettings):
     db_name: str
     db_url: str
 
-    origin_urls: list[str] = os.getenv("ORIGIN_URLS", "http://localhost:5173").split(",")
+    origin_urls: t.ClassVar[list[str]] = os.getenv("ORIGIN_URLS").split(",")
 
     @property
     def is_development(self) -> bool:
@@ -27,4 +28,10 @@ class Settings(BaseSettings):
         return self.env == "test"
 
 
+class GenSettings(BaseSettings):
+    gemini_api_key: str
+    gemini_model_name: str
+
+
 settings = Settings()
+gen_settings = GenSettings()

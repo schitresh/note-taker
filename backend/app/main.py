@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.database import connect_db
+from app.generation.router import router as generation_router
 from app.notes.router import router as notes_router
 
 
@@ -30,3 +31,4 @@ async def root():
 
 
 app.include_router(notes_router)
+app.include_router(generation_router)

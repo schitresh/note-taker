@@ -8,3 +8,6 @@ beanie
 # Development
 debugpy
 ruff
+
+# Generation Services
+google-genai
