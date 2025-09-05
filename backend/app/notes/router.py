@@ -7,7 +7,7 @@ from app.notes.schemas import NoteCreate, NoteRead, NoteUpdate
 router = APIRouter(prefix="/notes", tags=["Notes"])
 
 
-@router.get("/", response_model=list[NoteRead])
+@router.get("", response_model=list[NoteRead])
 async def list_notes():
     notes = await Note.find().to_list()
     return notes

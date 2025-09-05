@@ -12,6 +12,8 @@ class Settings(BaseSettings):
     db_name: str
     db_url: str
 
+    origin_urls: list[str] = os.getenv("ORIGIN_URLS", "http://localhost:5173").split(",")
+
     @property
     def is_development(self) -> bool:
         return self.env == "development"
@@ -23,5 +25,6 @@ class Settings(BaseSettings):
     @property
     def is_test(self) -> bool:
         return self.env == "test"
+
 
 settings = Settings()

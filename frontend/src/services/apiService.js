@@ -10,11 +10,16 @@ const apiClient = axios.create({
 });
 
 export const notesApi = {
-  list: () => apiClient.get('/notes'),
-  read: (id) => apiClient.get(`/notes/${id}`),
+  list: () => apiClient.get('/notes').then((res) => res.data),
+  read: (id) => apiClient.get(`/notes/${id}`).then((res) => res.data),
   create: (note) => apiClient.post('/notes', note),
   update: (id, note) => apiClient.put(`/notes/${id}`, note),
   delete: (id) => apiClient.delete(`/notes/${id}`),
 }
+
+
+export const generationApi = {
+  text: (prompt, options = {}) => apiClient.post('/generate/text', { prompt, ...options }).then((res) => res.data),
+};
 
 export default apiClient;
