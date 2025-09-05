@@ -10,7 +10,7 @@ import {
   Button,
 } from '@mui/material';
 
-const NoteList = ({ notes, selectedNote, onSelect, onSave }) => {
+const NoteList = ({ notes = [], selectedNote, onSelect, onSave }) => {
   const renderListItem = (note) => (
     <ListItemButton
       key={`note-item-${note.id}`}

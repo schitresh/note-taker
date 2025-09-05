@@ -1,0 +1,42 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: note-taker-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    restart: unless-stopped
+
+  backend:
+    build: ./backend
+    container_name: note-taker-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - mongodb
+    env_file:
+      - ./backend/.env
+      - ./backend/.env.creds
+    environment:
+      - DB_URL=mongodb://mongodb:27017
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: note-taker-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    env_file:
+      - ./frontend/.env
+    restart: unless-stopped
+
+volumes:
+  mongodb_data:
