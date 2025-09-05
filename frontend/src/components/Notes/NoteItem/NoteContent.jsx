@@ -1,7 +1,7 @@
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 
-const NoteTextField = styled(TextField)(() => ({
+const NoteContent = styled(TextField)(() => ({
   '& .MuiOutlinedInput-root': {
     padding: 0,
     '& fieldset': {
@@ -22,4 +22,4 @@ const NoteTextField = styled(TextField)(() => ({
   },
 }));
 
-export default NoteTextField;
+export default NoteContent;

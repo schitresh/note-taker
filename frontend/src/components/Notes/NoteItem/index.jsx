@@ -1,4 +1,3 @@
-import React, { useState, useEffect, useRef } from 'react';
 import {
   Box,
   IconButton,
@@ -6,8 +5,11 @@ import {
   Typography,
   Icon,
 } from '@mui/material';
-import TextGenerationButton from '../Generation/TextGenerationButton';
-import NoteTextField from './NoteTextField';
+import React, { useState, useEffect, useRef } from 'react';
+
+import TextGenerationButton from '../../Generation/TextGenerationButton';
+import NoteTitle from './NoteTitle';
+import NoteContent from './NoteContent';
 
 const NoteItem = ({ note, onSave, onDelete }) => {
   const [editedNote, setEditedNote] = useState(note);
@@ -70,30 +72,13 @@ const NoteItem = ({ note, onSave, onDelete }) => {
   // Render Helpers
 
   const renderTitle = () => (
-    <NoteTextField
+    <NoteTitle
       fullWidth
       variant="outlined"
       name="title"
       value={editedNote.title}
       onChange={handleInputChange}
       placeholder="Untitled Note"
-      sx={{
-        '& .MuiInputBase-input': {
-          fontSize: '2.5rem',
-          fontWeight: 700,
-          lineHeight: 1.2,
-          py: 1,
-          px: 0,
-          color: 'text.primary',
-          '&::placeholder': {
-            color: 'text.secondary',
-            opacity: 0.5,
-          },
-        },
-        '& .MuiOutlinedInput-notchedOutline': {
-          border: 'none',
-        },
-      }}
     />
   )
 
@@ -136,7 +121,7 @@ const NoteItem = ({ note, onSave, onDelete }) => {
   )
 
   const renderContent = () => (
-    <NoteTextField
+    <NoteContent
       fullWidth
       multiline
       variant="outlined"
@@ -158,7 +143,7 @@ const NoteItem = ({ note, onSave, onDelete }) => {
         margin: 'auto',
         height: '100%',
         overflowY: 'auto',
-        padding: '1rem',
+        padding: '2rem',
       }}
     >
       <Box

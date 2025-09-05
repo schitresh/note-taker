@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -9,6 +8,7 @@ import {
   Avatar,
   Icon
 } from '@mui/material';
+import React, { useState } from 'react';
 
 const NoteAppBar = ({
   isMobile = false,

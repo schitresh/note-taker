@@ -1,37 +1,30 @@
-import { useState, useEffect } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   Box,
-  Container,
   useMediaQuery,
   Snackbar,
   Alert,
   Drawer,
-  Paper
+  Paper,
+  LinearProgress
 } from '@mui/material';
-import NoteAppBar from './NoteAppBar';
-import NoteList from './NoteList';
-import NoteItem from './NoteItem';
+import { useState, useEffect } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
 import { notesApi } from '../../services/apiService';
+
+import AppBar from './AppBar';
+import NoteItem from './NoteItem';
+import NoteList from './NoteList';
 
 const Notes = () => {
   const [selectedNote, setSelectedNote] = useState(null);
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: '' });
 
-  // Handle Mobile View
-
-  const isMobile = useMediaQuery('(max-width:600px)');
-  const [menuDrawerOpen, setMenuDrawerOpen] = useState(false);
-
-  const toggleMenuDrawer = () => {
-    setMenuDrawerOpen(!menuDrawerOpen);
-  };
-
   // Query Handlers
 
   const queryClient = useQueryClient();
 
-  const { data: notes = [], isPending, isError, error: queryError } = useQuery({
+  const { data: notes = [], isLoading, error: queryError } = useQuery({
     queryKey: ['notes'],
     queryFn: () => notesApi.list(),
   });
@@ -74,7 +67,7 @@ const Notes = () => {
     }
   });
 
-  // Effects
+  // Selected Note
 
   useEffect(() => {
     if (!notes || notes.length === 0) return;
@@ -89,9 +82,9 @@ const Notes = () => {
     }
 
     setSelectedNote(currentNote);
-  }, [isPending, notes, selectedNote]);
+  }, [isLoading, notes, selectedNote]);
 
-  // Action Handlers
+  // Note Actions
 
   const handleSelectNote = (note) => {
     setSelectedNote(note);
@@ -111,14 +104,23 @@ const Notes = () => {
     }
   };
 
-  // Handle Error Display
-
-  const handleCloseSnackbar = () => {
-    setSnackbar((prev) => ({ ...prev, open: false }));
-  };
+  // Error Handlers
 
   const showSnackbar = (message, severity = 'success') => {
     setSnackbar({ open: true, message, severity });
+  };
+
+  const closeSnackbar = () => {
+    setSnackbar((prev) => ({ ...prev, open: false }));
+  };
+
+  // Mobile View
+
+  const isMobile = useMediaQuery('(max-width:600px)');
+  const [menuDrawerOpen, setMenuDrawerOpen] = useState(false);
+
+  const toggleMenuDrawer = () => {
+    setMenuDrawerOpen(!menuDrawerOpen);
   };
 
   // Render Helpers
@@ -127,10 +129,10 @@ const Notes = () => {
     <Snackbar
       open={snackbar.open}
       autoHideDuration={6000}
-      onClose={handleCloseSnackbar}
+      onClose={closeSnackbar}
     >
       <Alert
-        onClose={handleCloseSnackbar}
+        onClose={closeSnackbar}
         severity={snackbar.severity}
         variant="filled"
       >
@@ -139,9 +141,9 @@ const Notes = () => {
     </Snackbar>
   );
 
-  const renderDetail = () => (
+  const renderNoteItem = () => (
     <Box
-      key={`notes-detail-${selectedNote?.id}`}
+      key={`note-item-${selectedNote?.id}`}
       sx={{ width: '100%', overflowY: 'auto' }}
     >
       <NoteItem
@@ -185,9 +187,6 @@ const Notes = () => {
     </Drawer>
   );
 
-  if (isPending) return <Container>Loading...</Container>;
-  if (isError) return <Container>Something went wrong</Container>;
-
   return (
     <Box
       sx={{
@@ -206,15 +205,16 @@ const Notes = () => {
           flexDirection: 'column'
         }}
       >
-        <NoteAppBar
+        <AppBar
           isMobile={isMobile}
           toggleMenuDrawer={toggleMenuDrawer}
           onLogout={() => {
           }}
         />
+        {isLoading && <LinearProgress key="loading" />}
         {isMobile ? renderSidebarMobile() : renderSidebarDesktop()}
       </Paper>
-      {renderDetail()}
+      {renderNoteItem()}
     </Box>
   );
 };
